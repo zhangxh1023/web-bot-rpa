@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Web Bot RPA",
+  "description": "web bot rpa",
+  "version": "0.0.0",
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "service_worker": "service_worker/index.umd.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content_scripts/index.umd.js"
+      ],
+      "css": [
+        "content_scripts/css/index.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs"
+  ]
+}

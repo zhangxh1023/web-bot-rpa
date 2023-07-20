@@ -1,0 +1,6 @@
+.dom-clicked {
+  position: relative;
+  z-index: 2147483641;
+  outline: rgb(6, 73, 90) solid 2px !important;
+  background: rgba(0, 213, 0, 0.2) !important;
+}

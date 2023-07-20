@@ -1,0 +1,13 @@
+export enum Action {
+  // 开始选择节点
+  START_SELECT_NODE = 'START_SELECT_NODE',
+
+  // 取消选择节点
+  CANCEL_SELECT_NODE = 'CANCEL_SELECT_NODE',
+
+  // 节点选择完成
+  SELECT_NODE_DONE = 'SELECT_NODE_DONE',
+
+  // 开始执行
+  START_EXEC_WORKFLOW = 'START_EXEC_WORKFLOW',
+}
