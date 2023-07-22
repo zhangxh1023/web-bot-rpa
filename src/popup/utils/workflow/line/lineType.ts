@@ -7,6 +7,8 @@ export enum LineType {
   GET_DOM_CONTENT = 'GET_DOM_CONTENT',
   // 点击 DOM
   CLICK_DOM = 'CLICK_DOM',
+  // 暂停
+  SLEEP = 'SLEEP',
 }
 
 export class LineFactory {

@@ -1,6 +1,6 @@
 import type { Workflow } from '../popup/utils/workflow/workflow';
 import { Action } from '../common/action';
-import type { Message } from '../common/message';
+import type { reqMessage } from '../common/message';
 import { LineFactory } from '../popup/utils/workflow/line/lineType';
 import { GetDOMContentLine } from '../popup/utils/workflow/line/getDOMContentLine';
 import { ClickDOMLine } from '../popup/utils/workflow/line/clickDOMLine';
@@ -48,6 +48,11 @@ const documentClickHandle = (e: MouseEvent) => {
     document.removeEventListener('click', documentClickHandle);
     document.removeEventListener('mousemove', documentMouseMoveHandle);
 
+    // content_script.js
+
+    // 发送消息给background script
+    chrome.runtime.sendMessage({ action: 'getTabInfo' }).then(console.log);
+
     // send message to chrome extension popup.js
     chrome.runtime.sendMessage({
       action: Action.SELECT_NODE_DONE,
@@ -68,7 +73,7 @@ const documentMouseMoveHandle = (e: MouseEvent) => {
   }
 };
 
-const chromeMessageHandle = (message: Message<any>,
+const chromeMessageHandle = (message: reqMessage<any>,
   sender: chrome.runtime.MessageSender,
   sendResponse: () => void) => {
 
