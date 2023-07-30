@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import { Workflow } from '../utils/workflow/workflow';
-import { ClickDOMLine } from '../utils/workflow/line/clickDOMLine';
-import { GetDOMContentLine } from '../utils/workflow/line/getDOMContentLine';
+import { ClickDOMAction } from '../utils/workflow/action/clickDOMAction';
+import { GetDOMContentAction } from '../utils/workflow/action/getDOMContentAction';
 
 export const useWorkflowStore = defineStore('workflow', () => {
   const store = reactive({
@@ -20,8 +20,8 @@ export const useWorkflowStore = defineStore('workflow', () => {
     console.log(selector);
     if (store.currentSelect === null) return;
     const line = store.v.lines[store.currentSelect];
-    if (line instanceof ClickDOMLine
-      || line instanceof GetDOMContentLine) {
+    if (line instanceof ClickDOMAction
+      || line instanceof GetDOMContentAction) {
       line.selector = selector;
     }
     store.currentSelect = null;

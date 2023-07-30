@@ -1,5 +1,5 @@
 import { useWorkflowStore } from '../../../stores/workflow';
-import { Action } from '../../../../common/action';
+import { MessageAction } from '../../../../common/message';
 import type { reqMessage, respMessage } from '../../../../common/message';
 import type { RuntimeInterface } from '../runtimeInterface';
 import type { Workflow } from '../../workflow/workflow';
@@ -16,11 +16,11 @@ export class ChromeRuntime implements RuntimeInterface {
     return ChromeRuntime.instance;
   }
 
-  public listenContentScriptMessage(): void {
+  public listenContentScriptsMessage(): void {
     chrome.runtime.onMessage.addListener(this.contentScriptMessageHandle);
   }
 
-  removeContentScriptMessageListener(): void {
+  removeContentScriptsMessageListener(): void {
     chrome.runtime.onMessage.removeListener(this.contentScriptMessageHandle);
   }
 
@@ -29,7 +29,7 @@ export class ChromeRuntime implements RuntimeInterface {
     sender: chrome.runtime.MessageSender,
     sendResponse: () => void
   ): boolean {
-    if (message.action === Action.SELECT_NODE_DONE) {
+    if (message.action === MessageAction.SELECT_NODE_DONE) {
       const workflowStore = useWorkflowStore();
       workflowStore.selectDone(message.data);
     }
@@ -51,7 +51,7 @@ export class ChromeRuntime implements RuntimeInterface {
         const { id } = tab;
         if (id) {
           contentScriptsTask.push(
-            chrome.tabs.sendMessage(id, { action: Action.START_SELECT_NODE }));
+            chrome.tabs.sendMessage(id, { action: MessageAction.START_SELECT_NODE }));
         }
       }
     }
@@ -65,14 +65,14 @@ export class ChromeRuntime implements RuntimeInterface {
     return ret;
   }
 
-  public async execWorkflow(workflow: Workflow): Promise<respMessage<void>> {
+  public async execWorkflow(workflow: Workflow): Promise<respMessage<null>> {
     // todo
     // chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
     //   if (tabId === id && changeInfo.status === 'complete') {
     //     await chrome.tabs.sendMessage(id, { action: Action.START_EXEC_WORKFLOW, data: workflowStore.getWorkflow() });
     //   }
     // });
-    return {} as respMessage<void>;
+    return {} as respMessage<null>;
   }
 
 }

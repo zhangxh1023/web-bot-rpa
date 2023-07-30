@@ -1,8 +1,8 @@
-import { BaseLine } from './line/baseLine';
-import { LineFactory, type LineType } from './line/lineType';
+import { BaseAction } from './action/baseAction';
+import { ActionFactory, type ActionType } from './action';
 
 export class Workflow {
-  public lines: BaseLine[] = [];
+  public lines: BaseAction[] = [];
 
   constructor() {
     // todo
@@ -30,8 +30,8 @@ export class Workflow {
    * 插入 行
    * @param index 待插入的行 index
    */
-  public insertLine(index: number, type: LineType): void {
-    this.lines.splice(index, 0, LineFactory.getLine(type));
+  public insertLine(index: number, type: ActionType): void {
+    this.lines.splice(index, 0, ActionFactory.getLine(type));
   }
 
 }

@@ -1,9 +1,9 @@
 import type { Workflow } from '../popup/utils/workflow/workflow';
-import { Action } from '../common/action';
+import { MessageAction } from '../common/message';
 import type { reqMessage } from '../common/message';
-import { LineFactory } from '../popup/utils/workflow/line/lineType';
-import { GetDOMContentLine } from '../popup/utils/workflow/line/getDOMContentLine';
-import { ClickDOMLine } from '../popup/utils/workflow/line/clickDOMLine';
+import { ActionFactory } from '../popup/utils/workflow/action';
+import { GetDOMContentAction } from '../popup/utils/workflow/action/getDOMContentAction';
+import { ClickDOMAction } from '../popup/utils/workflow/action/clickDOMAction';
 
 const ownClass = ['dom-clicked'];
 
@@ -55,7 +55,7 @@ const documentClickHandle = (e: MouseEvent) => {
 
     // send message to chrome extension popup.js
     chrome.runtime.sendMessage({
-      action: Action.SELECT_NODE_DONE,
+      action: MessageAction.SELECT_NODE_DONE,
       data: getSelectorByDom(clickDom),
     });
   }
@@ -80,21 +80,21 @@ const chromeMessageHandle = (message: reqMessage<any>,
   console.log('message', message);
   console.log('sender', sender);
 
-  if (message.action === Action.START_SELECT_NODE) {
+  if (message.action === MessageAction.START_SELECT_NODE) {
     document.addEventListener('click', preventDefaultHandle);
     document.addEventListener('click', documentClickHandle, { passive: true });
     document.addEventListener('mousemove', documentMouseMoveHandle);
-  } else if (message.action === Action.START_EXEC_WORKFLOW) {
+  } else if (message.action === MessageAction.START_EXEC_WORKFLOW) {
     const workflow: Workflow = message.data;
     for (const _line of workflow.lines) {
-      const line = LineFactory.getLineByObject(_line);
+      const line = ActionFactory.getLineByObject(_line);
       if (line) {
-        if (line instanceof ClickDOMLine && line.selector) {
+        if (line instanceof ClickDOMAction && line.selector) {
           const element = document.querySelector(line.selector);
           if (element instanceof HTMLElement) {
             element.click();
           }
-        } else if (line instanceof GetDOMContentLine && line.selector) {
+        } else if (line instanceof GetDOMContentAction && line.selector) {
           const element = document.querySelector(line.selector);
           if (element instanceof HTMLElement) {
             console.log(`获取到内容: ${element.innerText}}`);

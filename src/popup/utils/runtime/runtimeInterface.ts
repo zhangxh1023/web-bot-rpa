@@ -3,12 +3,12 @@ import type { Workflow } from '../workflow/workflow';
 
 export interface RuntimeInterface {
 
-  listenContentScriptMessage(): void;
+  listenContentScriptsMessage(): void;
 
-  removeContentScriptMessageListener(): void;
+  removeContentScriptsMessageListener(): void;
 
   selectDom(): Promise<respMessage<string>>;
 
-  execWorkflow(workflow: Workflow): Promise<respMessage<void>>;
+  execWorkflow(workflow: Workflow): Promise<respMessage<null>>;
 
 }
