@@ -86,7 +86,7 @@ const chromeMessageHandle = (message: reqMessage<any>,
     document.addEventListener('mousemove', documentMouseMoveHandle);
   } else if (message.action === MessageAction.START_EXEC_WORKFLOW) {
     const workflow: Workflow = message.data;
-    for (const _line of workflow.lines) {
+    for (const _line of workflow.actions) {
       const line = ActionFactory.getLineByObject(_line);
       if (line) {
         if (line instanceof ClickDOMAction && line.selector) {

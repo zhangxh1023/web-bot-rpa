@@ -19,7 +19,7 @@ export const useWorkflowStore = defineStore('workflow', () => {
     console.log(store.currentSelect);
     console.log(selector);
     if (store.currentSelect === null) return;
-    const line = store.v.lines[store.currentSelect];
+    const line = store.v.actions[store.currentSelect];
     if (line instanceof ClickDOMAction
       || line instanceof GetDOMContentAction) {
       line.selector = selector;

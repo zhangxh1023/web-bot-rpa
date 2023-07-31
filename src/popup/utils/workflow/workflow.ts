@@ -2,7 +2,7 @@ import { BaseAction } from './action/baseAction';
 import { ActionFactory, type ActionType } from './action';
 
 export class Workflow {
-  public lines: BaseAction[] = [];
+  public actions: BaseAction[] = [];
 
   constructor() {
     // todo
@@ -14,8 +14,8 @@ export class Workflow {
    * @param to 移动的目标 index
    */
   public moveLine(from: number, to: number): void {
-    const delLine = this.lines.splice(from, 1);
-    this.lines.splice(to, 0, ...delLine);
+    const delLine = this.actions.splice(from, 1);
+    this.actions.splice(to, 0, ...delLine);
   }
 
   /**
@@ -23,7 +23,7 @@ export class Workflow {
    * @param index 待删除的行 index
    */
   public removeLine(index: number): void {
-    this.lines.splice(index, 1);
+    this.actions.splice(index, 1);
   }
 
   /**
@@ -31,7 +31,7 @@ export class Workflow {
    * @param index 待插入的行 index
    */
   public insertLine(index: number, type: ActionType): void {
-    this.lines.splice(index, 0, ActionFactory.getLine(type));
+    this.actions.splice(index, 0, ActionFactory.getLine(type));
   }
 
 }

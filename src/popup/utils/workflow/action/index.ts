@@ -1,6 +1,7 @@
 import type { BaseAction } from './baseAction';
 import { ClickDOMAction } from './clickDOMAction';
 import { GetDOMContentAction } from './getDOMContentAction';
+import { SleepAction } from './sleepAction';
 
 export enum ActionType {
   // 获取 DOM 内容
@@ -15,9 +16,11 @@ export class ActionFactory {
   public static getLine(type: ActionType): BaseAction {
     switch (type) {
       case ActionType.GET_DOM_CONTENT:
-        return new GetDOMContentAction;
+        return new GetDOMContentAction();
       case ActionType.CLICK_DOM:
-        return new ClickDOMAction;
+        return new ClickDOMAction();
+      case ActionType.SLEEP:
+        return new SleepAction();
       default:
         throw new Error('LineType not found');
     }
@@ -54,19 +57,19 @@ export class Action {
       {
         type: ActionType.GET_DOM_CONTENT,
         title: '获取节点内容',
-        desc: '获取节点内容',
+        desc: '选择节点，获取节点文本内容',
         icon: '',
       },
       {
         type: ActionType.CLICK_DOM,
         title: '点击节点',
-        desc: '点击节点',
+        desc: '选择节点，模拟点击',
         icon: '',
       },
       {
         type: ActionType.SLEEP,
         title: '暂停等待',
-        desc: '暂停等待',
+        desc: '暂停操作，等待',
         icon: '',
       }
     ];
