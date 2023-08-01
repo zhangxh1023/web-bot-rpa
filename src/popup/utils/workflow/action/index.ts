@@ -49,29 +49,23 @@ export type ActionDesc = {
   icon: string,
 };
 
-export class Action {
-  constructor() { }
-
-  public static getAllActionsDesc(): ActionDesc[] {
-    return [
-      {
-        type: ActionType.GET_DOM_CONTENT,
-        title: '获取节点内容',
-        desc: '选择节点，获取节点文本内容',
-        icon: '',
-      },
-      {
-        type: ActionType.CLICK_DOM,
-        title: '点击节点',
-        desc: '选择节点，模拟点击',
-        icon: '',
-      },
-      {
-        type: ActionType.SLEEP,
-        title: '暂停等待',
-        desc: '暂停操作，等待',
-        icon: '',
-      }
-    ];
+export const allActionsDesc: ActionDesc[] = [
+  {
+    type: ActionType.GET_DOM_CONTENT,
+    title: '获取节点内容',
+    desc: '选择节点，获取节点文本内容',
+    icon: '',
+  },
+  {
+    type: ActionType.CLICK_DOM,
+    title: '点击节点',
+    desc: '选择节点，模拟点击',
+    icon: '',
+  },
+  {
+    type: ActionType.SLEEP,
+    title: '暂停等待',
+    desc: '暂停操作，等待',
+    icon: '',
   }
-}
+];

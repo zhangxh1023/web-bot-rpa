@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { Action, ActionType } from '../utils/workflow/action/index';
+import { allActionsDesc } from '../utils/workflow/action/index';
 import { Workflow } from '../utils/workflow/workflow';
 import { ref } from 'vue';
 import type ElPopover from 'element-plus/lib/components/popover/index.js';
@@ -11,16 +11,23 @@ const workflow = reactive({
 });
 
 const isShowSelectActionDrawer = ref(false);
+const selectedActionIndex = ref(-1);
 
-const selectAction = (type: ActionType) => {
-  workflow.v.insertLine(workflow.v.actions.length, type);
+const selectAction = (selectedIndex: number) => {
+  selectedActionIndex.value = selectedIndex;
 };
 
 const cancelClick = () => {
+  selectedActionIndex.value = -1;
   isShowSelectActionDrawer.value = false;
 };
 const confirmClick = () => {
-  console.log('confire');
+  if (selectedActionIndex.value >= 0
+    && selectedActionIndex.value < allActionsDesc.length) {
+    workflow.v.insertLine(workflow.v.actions.length,
+      allActionsDesc[selectedActionIndex.value].type);
+  }
+  selectedActionIndex.value = -1;
   isShowSelectActionDrawer.value = false;
 };
 
@@ -31,11 +38,14 @@ const confirmClick = () => {
     {{ item }}
   </div>
 
-  <el-button style="margin-right: 16px" @click="isShowSelectActionDrawer = true">添加操作</el-button>
+  <el-button style="margin-right: 16px" @click="isShowSelectActionDrawer = true">
+    添加操作
+  </el-button>
 
   <el-drawer v-model="isShowSelectActionDrawer" :with-header="false">
     <template #default>
-      <div class="hand" v-for="item in Action.getAllActionsDesc()" :key="item.type" @click="selectAction(item.type)">
+      <div v-for="(item, index) in allActionsDesc" :key="index" @click="selectAction(index)"
+        :class="index === selectedActionIndex ? 'selectedAction hand' : 'hand'">
         {{ item.title }}
 
         <el-popover placement="top" :width="200" trigger="hover" :content="item.desc">
@@ -62,6 +72,10 @@ const confirmClick = () => {
 }
 
 .hand:hover {
-  background-color: red;
+  background-color: gray;
+}
+
+.selectedAction {
+  background-color: red !important;
 }
 </style>
