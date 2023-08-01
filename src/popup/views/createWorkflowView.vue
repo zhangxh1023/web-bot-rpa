@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { allActionsDesc } from '../utils/workflow/action/index';
+import { allActionsDesc, ActionType } from '../utils/workflow/action/index';
 import { Workflow } from '../utils/workflow/workflow';
 import { ref } from 'vue';
 import type ElPopover from 'element-plus/lib/components/popover/index.js';
@@ -18,8 +18,8 @@ const selectAction = (selectedIndex: number) => {
 };
 
 const cancelClick = () => {
-  selectedActionIndex.value = -1;
   isShowSelectActionDrawer.value = false;
+  selectedActionIndex.value = -1;
 };
 const confirmClick = () => {
   if (selectedActionIndex.value >= 0
@@ -27,15 +27,28 @@ const confirmClick = () => {
     workflow.v.insertLine(workflow.v.actions.length,
       allActionsDesc[selectedActionIndex.value].type);
   }
-  selectedActionIndex.value = -1;
   isShowSelectActionDrawer.value = false;
+  selectedActionIndex.value = -1;
 };
 
 </script>
 
 <template>
   <div v-for="(item, index) in workflow.v.actions" :key="index">
-    {{ item }}
+    <div v-if="item.type === ActionType.GET_DOM_CONTENT">
+      获取
+      <el-button>节点</el-button>
+      内容
+    </div>
+    <div v-if="item.type === ActionType.CLICK_DOM">
+      点击
+      <el-button>节点</el-button>
+    </div>
+    <div v-if="item.type === ActionType.SLEEP">
+      等待
+      <input type="number">
+      秒
+    </div>
   </div>
 
   <el-button style="margin-right: 16px" @click="isShowSelectActionDrawer = true">
