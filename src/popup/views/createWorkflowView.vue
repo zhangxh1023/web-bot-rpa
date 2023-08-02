@@ -4,6 +4,7 @@ import { allActionsDesc, ActionType } from '../utils/workflow/action/index';
 import { Workflow } from '../utils/workflow/workflow';
 import { ref } from 'vue';
 import type ElPopover from 'element-plus/lib/components/popover/index.js';
+import { storageWorkflow } from '../data/index';
 
 const _w = new Workflow();
 const workflow = reactive({
@@ -30,6 +31,12 @@ const confirmClick = () => {
   isShowSelectActionDrawer.value = false;
   selectedActionIndex.value = -1;
 };
+const saveWorkflow = () => {
+  storageWorkflow(workflow.v);
+};
+const execWorkflow = () => {
+
+};
 
 </script>
 
@@ -51,8 +58,14 @@ const confirmClick = () => {
     </div>
   </div>
 
-  <el-button style="margin-right: 16px" @click="isShowSelectActionDrawer = true">
+  <el-button @click="isShowSelectActionDrawer = true">
     添加操作
+  </el-button>
+  <el-button @click="saveWorkflow">
+    保存
+  </el-button>
+  <el-button @click="execWorkflow">
+    执行
   </el-button>
 
   <el-drawer v-model="isShowSelectActionDrawer" :with-header="false">

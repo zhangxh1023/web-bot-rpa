@@ -13,7 +13,7 @@ export enum ActionType {
 }
 
 export class ActionFactory {
-  public static getLine(type: ActionType): BaseAction {
+  public static getAction(type: ActionType): BaseAction {
     switch (type) {
       case ActionType.GET_DOM_CONTENT:
         return new GetDOMContentAction();

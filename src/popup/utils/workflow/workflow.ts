@@ -1,5 +1,9 @@
-import { BaseAction } from './action/baseAction';
-import { ActionFactory, type ActionType } from './action';
+import { BaseAction, type BaseSerializedAction } from './action/baseAction';
+import { ActionFactory, ActionType } from './action';
+
+export interface SerializedWorkflow {
+  actions: BaseSerializedAction[];
+}
 
 export class Workflow {
   public actions: BaseAction[] = [];
@@ -31,7 +35,23 @@ export class Workflow {
    * @param index 待插入的行 index
    */
   public insertLine(index: number, type: ActionType): void {
-    this.actions.splice(index, 0, ActionFactory.getLine(type));
+    this.actions.splice(index, 0, ActionFactory.getAction(type));
+  }
+
+  public serialize(): SerializedWorkflow {
+    const actions = [];
+    for (const item of this.actions) {
+      actions.push(item.serialize());
+    }
+    return { actions };
+  }
+
+  public deserialize(serialize: SerializedWorkflow) {
+    for (const item of serialize.actions) {
+      const type = item.type;
+      const action = ActionFactory.getAction(ActionType[type as keyof typeof ActionType]);
+      this.actions.push(action.deserialize(item));
+    }
   }
 
 }
