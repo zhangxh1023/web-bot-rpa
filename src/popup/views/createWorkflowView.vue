@@ -31,8 +31,24 @@ const confirmClick = () => {
   isShowSelectActionDrawer.value = false;
   selectedActionIndex.value = -1;
 };
-const saveWorkflow = () => {
-  storageWorkflow(workflow.v);
+const saveWorkflow = async () => {
+  const remark = await ElMessageBox.prompt('请输入备注', 'Tip', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    inputValidator: str => {
+      if (!str) {
+        return '备注不能为空';
+      }
+      return true;
+    }
+  }).catch(() => { });
+  if (remark) {
+    storageWorkflow(workflow.v, remark.value);
+    ElMessage({
+      type: 'success',
+      message: '保存成功',
+    });
+  }
 };
 const execWorkflow = () => {
 

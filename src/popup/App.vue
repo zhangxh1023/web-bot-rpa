@@ -8,10 +8,7 @@
       <el-aside width="100px">
         <RouterLink to="/"><p>首页</p></RouterLink>
         <RouterLink to="/createWorkflow"><p>新的任务</p></RouterLink>
-        <RouterLink to="/userWorkflows"><p>任务</p></RouterLink>
-        <RouterLink to="/community"><p>社区</p></RouterLink>
-        <RouterLink to="/userInfo"><p>用户信息</p></RouterLink>
-        <RouterLink to="/settings"><p>设置</p></RouterLink>
+        <RouterLink to="/localWorkflow"><p>本地任务</p></RouterLink>
       </el-aside>
       <el-main>
         <RouterView></RouterView>
